@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
+      //changenotifier tells the other widgets when a change has happpened
       create: (context) => MyAppState(),
       child: MaterialApp(
         title: 'Namer App',
@@ -39,6 +40,12 @@ class MyHomePage extends StatelessWidget {
         children: [
           Text('we starting this hard!!!'),
           Text(appState.current.asLowerCase),
+          ElevatedButton(
+            onPressed: () {
+              print('button pressed!');
+            },
+            child: Text('Next'),
+          ),
         ],
       ),
     );
