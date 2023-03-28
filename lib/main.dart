@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent),
         ),
         home: MyHomePage(),
       ),
@@ -45,9 +45,11 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         children: [
           Text('we starting this hard!!!'),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: BigCard(pair: pair),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: BigCard(pair: pair),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
@@ -71,6 +73,15 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(pair.asLowerCase);
+    final theme = Theme.of(
+        context); // this is to change the theme of the whole app to match
+
+    return Card(
+      color: theme.colorScheme.primary, // ← And also this.
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Text(pair.asLowerCase),
+      ),
+    );
   }
 }
