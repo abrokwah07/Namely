@@ -75,12 +75,17 @@ class BigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(
         context); // this is to change the theme of the whole app to match
+    final style = theme.textTheme.displayMedium!.copyWith(
+      // to change text
+      color: theme.colorScheme
+          .onPrimary, //The color scheme's onPrimary property defines a color that is a good fit for use on the app's primary color.
+    );
 
     return Card(
       color: theme.colorScheme.primary, // ← And also this.
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Text(pair.asLowerCase),
+        child: Text("${pair.first} ${pair.second}", style: style),
       ),
     );
   }
