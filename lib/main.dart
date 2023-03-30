@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       //changenotifier tells the other widgets when a change has happpened
+
       create: (context) => MyAppState(),
       child: MaterialApp(
         title: 'Namer App',
@@ -51,6 +52,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
+
+    //this will add the favorited or unfavorited
     IconData icon;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
