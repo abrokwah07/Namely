@@ -50,10 +50,46 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    //this will add the favorited or unfavorited
     IconData icon;
     if (appState.favorites.contains(pair)) {
       icon = Icons.favorite;
@@ -61,38 +97,32 @@ class MyHomePage extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Random 2 Words"),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: BigCard(pair: pair),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
               ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavorite();
-                  },
-                  icon: Icon(icon),
-                  label: Text('Like'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext(); // this will call the getNext function
-                  },
-                  child: Text('Next'),
-                ),
-              ],
-            ),
-          ],
-        ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
